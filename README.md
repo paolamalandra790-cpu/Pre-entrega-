@@ -8,7 +8,7 @@ h2 {
   color: #2c3e50;
   font-family: Arial;
 }
-
+```
 
 ### 2. Selector de Clase
 ```css
