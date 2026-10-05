@@ -3,8 +3,7 @@
 Práctica de selectores CSS para fichas de talentos.
 
 ### 1. Selector de Etiqueta
-``` css
-
+``` cssñ
 h2 {
   color: #2c3e50;
   font-family: Arial;
@@ -13,7 +12,6 @@ h2 {
 
 ### 2. Selector de Clase
 ``` css
-
 .tarjeta-talento {`
   border: 1px solid #ccc;
   border-radius: 10px;
