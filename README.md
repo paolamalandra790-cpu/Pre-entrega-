@@ -4,6 +4,7 @@ Práctica de selectores CSS para fichas de talentos.
 
 ### 1. Selector de Etiqueta
 ``` css
+
 h2 {
   color: #2c3e50;
   font-family: Arial;
