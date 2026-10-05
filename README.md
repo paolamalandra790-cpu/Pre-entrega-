@@ -13,7 +13,8 @@ h2 {
 ### 2. Selector de Clase
 
 ``` css
-.tarjeta-talento {`
+
+.tarjeta-talento {
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 15px;
