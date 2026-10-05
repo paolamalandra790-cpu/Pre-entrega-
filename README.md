@@ -9,6 +9,7 @@ h2 {
   font-family: Arial;
 }
 
+
 ### 2. Selector de Clase
 ```css
 .tarjeta-talento {
