@@ -10,6 +10,7 @@ h2 {
 }
 
 ### 2. Selector de Clase
+``` css
 .tarjeta-talento {
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -17,11 +18,13 @@ h2 {
 }
 
 ### 3. Selector de ID
+``` css
 #talento-destacado {
   background-color: gold;
 }
 
 ### 4. Selector Combinado
+``` css
 div .habilidad {
   font-weight: bold;
 }```
