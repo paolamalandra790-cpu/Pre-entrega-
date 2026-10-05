@@ -11,7 +11,6 @@ h2 {
 
 
 ### 2. Selector de Clase
-
 ``` css
 
 .tarjeta-talento {
