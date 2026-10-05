@@ -24,5 +24,6 @@ h2 {
 ### 4. Selector Combinado
 div .habilidad {
   font-weight: bold;
-}
+}```
+
 
