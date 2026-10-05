@@ -16,6 +16,7 @@ h2 {
   border-radius: 10px;
   padding: 15px;
 }
+``` 
 
 ### 3. Selector de ID
 ``` css
@@ -27,6 +28,7 @@ h2 {
 ``` css
 div .habilidad {
   font-weight: bold;
-}```
+}
+```
 
 
