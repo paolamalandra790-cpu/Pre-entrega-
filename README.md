@@ -7,22 +7,22 @@ Práctica de selectores CSS para fichas de talentos.
 h2 {
   color: #2c3e50;
   font-family: Arial;
-}```
+}
 
 ### 2. Selector de Clase
 .tarjeta-talento {
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 15px;
-}```
+}
 
 ### 3. Selector de ID
 #talento-destacado {
   background-color: gold;
-}```
+}
 
 ### 4. Selector Combinado
 div .habilidad {
   font-weight: bold;
-}``` 
+}
 
