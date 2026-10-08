@@ -9,7 +9,7 @@ driver.get("https://www.saucedemo.com/")
 wait = WebDriverWait(driver, 10)
 
 # 2. Login - con las 3 estrategias que pide Matías en Clase 8
-wait.unt(EC.visibility_of_element_located((By.ID, "user-name"))).send_keys("standard_user")
+wait.until(EC.visibility_of_element_located((By.ID, "user-name"))).send_keys("standard_user")
 driver.find_element(By.NAME, "password").send_keys("secret_sauce")
 driver.find_element(By.CSS_SELECTOR, "input#login-button").click()
 
