@@ -17,7 +17,7 @@ def test_buscar_usuario_3():
 
 def test_crear_usuario_romy():
     url = "https://jsonplaceholder.typicode.com/users"
-    nuevo_usuario = {"name": "Romy Paverini", "email": "romy.paverini@test.com"}
+    nuevo_usuario = {"name": "Romy Malandra", "email": "romy.paverini@test.com"}
     respuesta = requests.post(url, json=nuevo_usuario)
     assert respuesta.status_code == 201
-    assert respuesta.json()["name"] == "Romy Paverini"
+    assert respuesta.json()["name"] == "Romy Malandra"
