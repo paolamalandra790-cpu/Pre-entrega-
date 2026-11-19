@@ -3,8 +3,8 @@ import requests
 
 @pytest.mark.api
 @pytest.mark.parametrize("email, password, esperado", [
-    ("paolamalandra@hotmail.com", "cityslicka", 200),
-    ("paolamalandra@hotmail.com", None, 400),
+    ("eve.holt@reqres.in", "cityslicka", 200),
+    ("eve.holt@reqres.in", None, 400),
 ])
 def test_login_api(email, password, esperado):
     url = "https://reqres.in/api/login"
