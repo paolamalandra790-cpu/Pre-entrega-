@@ -1,5 +1,5 @@
-usuario,clave,resultado_esperado
-standard_user,secret_sauce,ok
-locked_out_user,secret_sauce,bloqueado
-problem_user,secret_sauce,ok
-performance_glitch_user,secret_sauce,ok
+usuario,clave,debe_funcionar,descripcion
+standard_user,secret_sauce,True,Login valido
+locked_out_user,secret_sauce,False,Usuario bloqueado
+problem_user,secret_sauce,True,Usuario con problemas
+performance_glitch_user,secret_sauce,True,Usuario lento
