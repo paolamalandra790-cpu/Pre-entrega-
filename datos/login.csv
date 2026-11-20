@@ -1,0 +1,5 @@
+usuario,clave,resultado_esperado
+standard_user,secret_sauce,ok
+locked_out_user,secret_sauce,bloqueado
+problem_user,secret_sauce,ok
+performance_glitch_user,secret_sauce,ok
