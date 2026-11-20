@@ -2,8 +2,8 @@ import csv
 import os
 
 def leer_datos_login():
-    ruta = os.path.join(os.path.dirname(__file__), "..", "datos", "login.csv")
-    Datos = []
+    ruta = os.path.join(os.path.dirname(__file__), "..", "Datos", "login.csv")
+    datos = []
     with open(ruta, newline='', encoding='utf-8') as archivo:
         lector = csv.DictReader(archivo)
         for fila in lector:
