@@ -10,7 +10,7 @@ class LoginPage:
         self.pass_input = (By.ID, "password")
         self.login_btn = (By.ID, "login-button")
 
-    def abrir(self):
+    def open(self):
         self.driver.get("https://www.saucedemo.com/")
 
     def login(self, user, password):
