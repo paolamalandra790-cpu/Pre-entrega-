@@ -1,17 +1,21 @@
-import csv
-import json
+import requests
 
-def leer_csv_login(ruta_archivo):
-    """Lee el archivo CSV de credenciales de login. Retorna lista de tuplas para pytest.mark.parametrize"""
-    with open(ruta_archivo, newline='', encoding='utf-8') as archivo:
-        lector = csv.DictReader(archivo)
-        casos = []
-        for fila in lector:
-            debe = fila["debe_funcionar"].lower() == "true"
-            casos.append((fila["usuario"], fila["clave"], debe, fila["descripcion"]))
-        return casos
+BASE_URL = "https://fakestoreapi.com"
 
-def leer_json_productos(ruta_archivo):
-    """Lee el archivo JSON de productos. Retorna lista de productos para parametrizacion"""
-    with open(ruta_archivo, encoding='utf-8') as archivo:
-        return json.load(archivo)
+def get_productos():
+    """Trae la lista de productos desde la API"""
+    respuesta = requests.get(f"{BASE_URL}/products", timeout=10)
+    respuesta.raise_for_status()
+    return respuesta.json()
+
+def get_producto_por_id(producto_id):
+    """Trae un producto por su id"""
+    respuesta = requests.get(f"{BASE_URL}/products/{producto_id}", timeout=10)
+    respuesta.raise_for_status()
+    return respuesta.json()
+
+def crear_producto(datos_producto):
+    """Crea un producto nuevo en la API"""
+    respuesta = requests.post(f"{BASE_URL}/products", json=datos_producto, timeout=10)
+    respuesta.raise_for_status()
+    return respuesta.json()
