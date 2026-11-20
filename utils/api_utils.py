@@ -1,15 +1,17 @@
-import requests
+import csv
+import json
 
-BASE_URL = "https://reqres.in/api"
+def leer_csv_login(ruta_archivo):
+    """Lee el archivo CSV de credenciales de login. Retorna lista de tuplas para pytest.mark.parametrize"""
+    with open(ruta_archivo, newline='', encoding='utf-8') as archivo:
+        lector = csv.DictReader(archivo)
+        casos = []
+        for fila in lector:
+            debe = fila["debe_funcionar"].lower() == "true"
+            casos.append((fila["usuario"], fila["clave"], debe, fila["descripcion"]))
+        return casos
 
-def get_users(page=1):
-    return requests.get(f"{BASE_URL}/users?page={page}")
-
-def login(email, password=None):
-    datos = {"email": email}
-    if password:
-        datos["password"] = password
-    return requests.post(f"{BASE_URL}/login", json=datos)
-
-def create_user(nombre, trabajo):
-    return requests.post(f"{BASE_URL}/users", json={"name": nombre, "job": trabajo})
+def leer_json_productos(ruta_archivo):
+    """Lee el archivo JSON de productos. Retorna lista de productos para parametrizacion"""
+    with open(ruta_archivo, encoding='utf-8') as archivo:
+        return json.load(archivo)
