@@ -8,3 +8,4 @@ def pytest_runtest_makereport(item, call):
         if driver:
             driver.save_screenshot("foto_cuando_fallo.png")
             print("Se guardó la foto porque falló")
+    return rep
