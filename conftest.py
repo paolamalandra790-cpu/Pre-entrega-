@@ -9,7 +9,7 @@ def driver():
     d.quit()
 
 def pytest_runtest_makereport(item, call):
-    if call.when == "call" and call.failed:
+    if call.when == "call" and call.excinfo is not None:
         driver = item.funcargs.get("driver")
         if driver:
             driver.save_screenshot("foto_cuando_fallo.png")
