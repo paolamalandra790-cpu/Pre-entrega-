@@ -1,15 +1,21 @@
 import requests
 
-BASE_URL = "https://reqres.in/api"
+BASE_URL = "https://fakestoreapi.com"
 
-def get_users(page=1):
-    return requests.get(f"{BASE_URL}/users?page={page}")
+def get_productos():
+    """Trae la lista de productos desde la API"""
+    respuesta = requests.get(f"{BASE_URL}/products", timeout=10)
+    respuesta.raise_for_status()
+    return respuesta.json()
 
-def login(email, password=None):
-    datos = {"email": email}
-    if password:
-        datos["password"] = password
-    return requests.post(f"{BASE_URL}/login", json=datos)
+def get_producto_por_id(producto_id):
+    """Trae un producto por su id"""
+    respuesta = requests.get(f"{BASE_URL}/products/{producto_id}", timeout=10)
+    respuesta.raise_for_status()
+    return respuesta.json()
 
-def create_user(nombre, trabajo):
-    return requests.post(f"{BASE_URL}/users", json={"name": nombre, "job": trabajo})
+def crear_producto(datos_producto):
+    """Crea un producto nuevo en la API"""
+    respuesta = requests.post(f"{BASE_URL}/products", json=datos_producto, timeout=10)
+    respuesta.raise_for_status()
+    return respuesta.json()
