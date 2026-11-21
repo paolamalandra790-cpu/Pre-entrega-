@@ -1,4 +1,3 @@
-# language: es
 @ui
 Feature: Autenticación en SauceDemo
   Como usuario de SauceDemo
