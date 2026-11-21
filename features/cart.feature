@@ -1,4 +1,3 @@
-# language: es
 @ui @regression
 Feature: Funcionalidad del carrito
 
