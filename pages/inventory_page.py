@@ -11,3 +11,7 @@ class InventoryPage:
 
     def is_displayed(self):
         return self.driver.find_element(*self.list).is_displayed()
+        def add_product_to_cart(self, product_name):
+        product_id = product_name.lower().replace(" ", "-")
+        button = self.driver.find_element(By.ID, f"add-to-cart-{product_id}")
+        button.click()
