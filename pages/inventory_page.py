@@ -14,12 +14,10 @@ class InventoryPage:
         )
         self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", btn)
         time.sleep(0.5)
-        # Click con JS, no falla aunque lo tape el header
         self.driver.execute_script("arguments[0].click();", btn)
         time.sleep(1)
 
     def get_cart_count(self):
-        # Prueba todos los selectores posibles del badge
         for selector in [
             "[data-test='shopping-cart-badge']",
             ".shopping_cart_badge",
