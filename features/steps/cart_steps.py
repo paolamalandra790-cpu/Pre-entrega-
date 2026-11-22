@@ -8,7 +8,7 @@ def step_add_product(context, product):
     logger.info(f"Agregando producto: {product}")
     context.inventory_page.add_product_to_cart(product)
 
-@then('el contador del carrito debería ser "{count}"')
+@then('el contador del carrito deberia ser "{count}"')
 def step_verify_cart_count(context, count):
     actual = context.inventory_page.get_cart_count()
     assert actual == count, f"Esperado: {count}, Obtenido: {actual}"
