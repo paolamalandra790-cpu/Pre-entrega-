@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 
 class InventoryPage:
     def __init__(self, driver):
@@ -11,7 +12,10 @@ class InventoryPage:
         btn = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(locator)
         )
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", btn)
+        time.sleep(0.5)
         btn.click()
+        time.sleep(0.5)
 
     def get_cart_count(self):
         try:
