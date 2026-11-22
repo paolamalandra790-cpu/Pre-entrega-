@@ -16,3 +16,10 @@ class InventoryPage:
         product_id = product_name.lower().replace(" ", "-")
         button = self.driver.find_element(By.ID, f"add-to-cart-{product_id}")
         button.click()
+    
+    def get_cart_count(self):
+        try:
+            badge = self.driver.find_element(By.CLASS_NAME, "shopping_cart_badge")
+            return int(badge.text)
+        except:
+            return 0
