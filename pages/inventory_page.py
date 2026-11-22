@@ -1,17 +1,40 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
 
 class InventoryPage:
     def __init__(self, driver):
         self.driver = driver
-        self.title = (By.CLASS_NAME, "title")
-        self.list = (By.CLASS_NAME, "inventory_list")
 
-    def get_title(self):
-        return self.driver.find_element(*self.title).text
+    def add_product_to_cart(self, product_name):
+        locator = (By.XPATH, f"//div[text()='{product_name}']/ancestor::div[contains(@class, 'inventory_item')]//button")
+        btn = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locator)
+        )
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", btn)
+        time.sleep(0.5)
+        self.driver.execute_script("arguments[0].click();", btn)
+        time.sleep(1)
 
-    def is_displayed(self):
-        return self.driver.find_element(*self.list).is_displayed()
-        def add_product_to_cart(self, product_name):
-        product_id = product_name.lower().replace(" ", "-")
-        button = self.driver.find_element(By.ID, f"add-to-cart-{product_id}")
-        button.click()
+    def get_cart_count(self):
+        for selector in [
+            "[data-test='shopping-cart-badge']",
+            ".shopping_cart_badge",
+            ".shopping-cart-badge",
+            ".shopping_cart_link",
+        ]:
+            try:
+                el = self.driver.find_element(By.CSS_SELECTOR, selector)
+                txt = el.text.strip()
+                if txt.isdigit():
+                    return int(txt)
+            except:
+                pass
+        return 0
+
+    def go_to_cart(self):
+        cart_link = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.CLASS_NAME, "shopping_cart_link"))
+        )
+        cart_link.click()
