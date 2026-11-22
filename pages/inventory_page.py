@@ -1,29 +1,25 @@
-import time
-from behave import given, when, then
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from features.pages.login_page import LoginPage
-from features.pages.inventory_page import InventoryPage
+class InventoryPage:
+    def __init__(self, driver):
+        self.driver = driver
+        self.cart_badge = (By.CLASS_NAME, "shopping_cart_badge")
+        self.cart_link = (By.CLASS_NAME, "shopping_cart_link")
 
-@given('estoy logueado como "{user}" con contraseña "{password}"')
-def step_logged_in(context, user, password):
-    login_page = LoginPage(context.driver)
-    login_page.login(user, password)
-    context.inventory_page = InventoryPage(context.driver)
+    def add_product_to_cart(self, product_name):
+        product_name = product_name.lower().replace(" ", "-")
+        button = (By.ID, f"add-to-cart-{product_name}")
+        WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(button)
+        ).click()
 
-@when('agregó el producto "{product}" al carrito')
-def step_add_to_cart(context, product):
-    context.inventory_page.add_product_to_cart(product)
-    time.sleep(1)
-
-@then('el contador del carrito debería ser "{count}"')
-def step_cart_count(context, count):
-    actual = context.inventory_page.get_cart_count()
-    assert actual == int(count), f"Esperado: {count}, Obtenido: {actual}"
-
-@then('el carrito debería tener "{count}" productos')
-def step_cart_products(context, count):
-    actual = context.inventory_page.get_cart_count()
-    assert actual == int(count), f"Esperado: {count}, Obtenido: {actual}"
+    def get_cart_count(self):
+        try:
+            badge = WebDriverWait(self.driver, 5).until(
+                EC.visibility_of_element_located(self.cart_badge)
+            )
+            return int(badge.text)
+        except:
+            return 0
