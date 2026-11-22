@@ -1,40 +1,29 @@
+import time
+from behave import given, when, then
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
 
-class InventoryPage:
-    def __init__(self, driver):
-        self.driver = driver
+from features.pages.login_page import LoginPage
+from features.pages.inventory_page import InventoryPage
 
-    def add_product_to_cart(self, product_name):
-        locator = (By.XPATH, f"//div[text()='{product_name}']/ancestor::div[contains(@class, 'inventory_item')]//button")
-        btn = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(locator)
-        )
-        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", btn)
-        time.sleep(0.5)
-        self.driver.execute_script("arguments[0].click();", btn)
-        time.sleep(1)
+@given('estoy logueado como "{user}" con contraseña "{password}"')
+def step_logged_in(context, user, password):
+    login_page = LoginPage(context.driver)
+    login_page.login(user, password)
+    context.inventory_page = InventoryPage(context.driver)
 
-    def get_cart_count(self):
-        for selector in [
-            "[data-test='shopping-cart-badge']",
-            ".shopping_cart_badge",
-            ".shopping-cart-badge",
-            ".shopping_cart_link",
-        ]:
-            try:
-                el = self.driver.find_element(By.CSS_SELECTOR, selector)
-                txt = el.text.strip()
-                if txt.isdigit():
-                    return int(txt)
-            except:
-                pass
-        return 0
+@when('agregó el producto "{product}" al carrito')
+def step_add_to_cart(context, product):
+    context.inventory_page.add_product_to_cart(product)
+    time.sleep(1)
 
-    def go_to_cart(self):
-        cart_link = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.CLASS_NAME, "shopping_cart_link"))
-        )
-        cart_link.click()
+@then('el contador del carrito debería ser "{count}"')
+def step_cart_count(context, count):
+    actual = context.inventory_page.get_cart_count()
+    assert actual == int(count), f"Esperado: {count}, Obtenido: {actual}"
+
+@then('el carrito debería tener "{count}" productos')
+def step_cart_products(context, count):
+    actual = context.inventory_page.get_cart_count()
+    assert actual == int(count), f"Esperado: {count}, Obtenido: {actual}"
