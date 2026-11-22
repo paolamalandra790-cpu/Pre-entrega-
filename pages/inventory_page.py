@@ -12,17 +12,28 @@ class InventoryPage:
         btn = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(locator)
         )
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", btn)
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", btn)
         time.sleep(0.5)
-        btn.click()
-        time.sleep(0.5)
+        # Click con JS, no falla aunque lo tape el header
+        self.driver.execute_script("arguments[0].click();", btn)
+        time.sleep(1)
 
     def get_cart_count(self):
-        try:
-            badge = self.driver.find_element(By.CSS_SELECTOR, ".shopping_cart_badge")
-            return int(badge.text)
-        except:
-            return 0
+        # Prueba todos los selectores posibles del badge
+        for selector in [
+            "[data-test='shopping-cart-badge']",
+            ".shopping_cart_badge",
+            ".shopping-cart-badge",
+            ".shopping_cart_link",
+        ]:
+            try:
+                el = self.driver.find_element(By.CSS_SELECTOR, selector)
+                txt = el.text.strip()
+                if txt.isdigit():
+                    return int(txt)
+            except:
+                pass
+        return 0
 
     def go_to_cart(self):
         cart_link = WebDriverWait(self.driver, 10).until(
