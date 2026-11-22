@@ -2,7 +2,7 @@ import subprocess
 
 def run_behave(feature_file):
     result = subprocess.run(
-        ["behave", feature_file, "--no-capture"],
+        ["python", "-m", "behave", feature_file, "--no-capture"],
         capture_output=True,
         text=True
     )
