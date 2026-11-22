@@ -5,7 +5,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-@given('que estoy en la página de login')
+@when('que estoy en la página de login')
 def step_open_login(context):
     logger.info("Abriendo página de login")
     context.login_page = LoginPage(context.driver)
