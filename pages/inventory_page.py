@@ -7,8 +7,7 @@ class InventoryPage:
         self.driver = driver
 
     def add_product_to_cart(self, product_name):
-        slug = product_name.lower().replace(" ", "-")
-        locator = (By.CSS_SELECTOR, f'[data-test="add-to-cart-{slug}"]')
+        locator = (By.XPATH, f"//div[text()='{product_name}']/ancestor::div[contains(@class, 'inventory_item')]//button")
         btn = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(locator)
         )
@@ -23,6 +22,6 @@ class InventoryPage:
 
     def go_to_cart(self):
         cart_link = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-test="shopping-cart-link"]'))
+            EC.element_to_be_clickable((By.CLASS_NAME, "shopping_cart_link"))
         )
         cart_link.click()
