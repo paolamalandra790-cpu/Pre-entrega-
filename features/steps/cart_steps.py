@@ -24,11 +24,16 @@ def step_login(context, user, password):
 def step_agregar_producto(context, product_name):
     product_id = product_name.lower().replace(" ", "-")
     boton_id = f"add-to-cart-{product_id}"
-    context.driver.find_element(By.ID, boton_id).click()
+    boton = WebDriverWait(context.driver, 10).until(
+        EC.element_to_be_clickable((By.ID, boton_id))
+    )
+    context.driver.execute_script("arguments[0].scrollIntoView(true);", boton)
+    boton.click()
 
 @then('el contador del carrito debe mostrar "{expected}"')
 def step_verificar_contador(context, expected):
-    badge = WebDriverWait(context.driver, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "shopping_cart_badge"))
+    WebDriverWait(context.driver, 10).until(
+        EC.text_to_be_present_in_element((By.CLASS_NAME, "shopping_cart_badge"), expected)
     )
+    badge = context.driver.find_element(By.CLASS_NAME, "shopping_cart_badge")
     assert badge.text == expected, f"Esperaba {expected} pero el carrito muestra {badge.text}"
