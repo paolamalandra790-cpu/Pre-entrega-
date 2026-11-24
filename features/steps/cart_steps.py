@@ -1,14 +1,21 @@
-from behave import when, then
-import logging
+from behave import given, when, then
+from pages.login_page import LoginPage
+from pages.inventory_page import InventoryPage
+from pages.cart_page import CartPage
 
-logger = logging.getLogger(__name__)
+@given('inicio sesion con usuario "{user}" y contrasena "{password}"')
+def step_login(context, user, password):
+    login_page = LoginPage(context.driver)
+    login_page.login(user, password)
 
-@when('agrego el producto "{product}" al carrito')
-def step_add_product(context, product):
-    logger.info(f"Agregando producto: {product}")
-    context.inventory_page.add_product_to_cart(product)
+@when('agrego el producto "{product_name}" al carrito')
+def step_add_product(context, product_name):
+    # Instancia la pagina del inventario
+    inventory_page = InventoryPage(context.driver)
+    inventory_page.add_product_to_cart(product_name)
 
-@then('el contador del carrito deberia ser "{count}"')
-def step_verify_cart_count(context, count):
-    actual = context.inventory_page.get_cart_count()
-    assert actual == count, f"Esperado: {count}, Obtenido: {actual}"
+@when('agrego los siguientes productos al carrito')
+def step_add_multiple_products(context):
+    inventory_page = InventoryPage(context.driver)
+    for row in context.table:
+        inventory_page.add_product_to_cart(row['producto'])
