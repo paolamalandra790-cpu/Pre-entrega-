@@ -1,36 +1,24 @@
+# Pre-Entrega - Automatización QA
 
-# Objetivo
-Práctica de selectores CSS para fichas de talentos.
+Proyecto de automatización de pruebas para la Entrega Final del curso de QA.
 
-### 1. Selector de Etiqueta
-``` cssñ
-h2 {
-  color: #2c3e50;
-  font-family: Arial;
-}
-```
+## Objetivo
+Automatizar el flujo de login y compra de la tienda SauceDemo usando Selenium WebDriver con patrón Page Object Model (POM).
 
-### 2. Selector de Clase
-```css
-.tarjeta-talento {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 15px;
-}
-``` 
+## Tecnologías
+- Python
+- Selenium WebDriver
+- Pytest
+- GitHub Actions (CI)
 
-### 3. Selector de ID
-``` css
-#talento-destacado {
-  background-color: gold
-}
-```
+## Estructura del proyecto
+- `pages/` - Page Objects (LoginPage, InventoryPage, CartPage)
+- `tests_api/` - Tests de API
+- `tests/` - Tests UI con Selenium
+- `datos/` - Datos de prueba (JSON)
+- `.github/workflows/` - Pipeline de CI que corre los tests en cada push
 
-### 4. Selector Combinado
-``` css
-div .habilidad {
-  font-weight: bold;
-}
-```
-
-
+## Cómo ejecutar los tests
+```bash
+pip install -r requirements.txt
+pytest
