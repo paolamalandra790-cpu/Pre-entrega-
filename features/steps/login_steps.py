@@ -1,46 +1,44 @@
 from behave import given, when, then
-from pages.login_page import LoginPage
-from pages.inventory_page import InventoryPage
-import logging
-
-logger = logging.getLogger(__name__)
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 @given('que estoy en la página de login')
-def step_open_login(context):
-    logger.info("Abriendo página de login")
-    context.login_page = LoginPage(context.driver)
-    context.login_page.open()
+def step_pagina_login(context):
+    context.driver.get("https://www.saucedemo.com/")
+    WebDriverWait(context.driver, 10).until(
+        EC.presence_of_element_located((By.ID, "user-name"))
+    )
 
 @when('ingreso el usuario "{user}" y la contraseña "{password}"')
-def step_enter_credentials(context, user, password):
-    logger.info(f"Ingresando credenciales usuario={user}")
-    context.login_page.enter_username(user)
-    context.login_page.enter_password(password)
+def step_ingreso_datos(context, user, password):
+    campo_user = context.driver.find_element(By.ID, "user-name")
+    campo_user.clear()
+    campo_user.send_keys(user)
+    campo_pass = context.driver.find_element(By.ID, "password")
+    campo_pass.clear()
+    campo_pass.send_keys(password)
 
 @when('hago clic en el botón de login')
-def step_click_login(context):
-    logger.info("Click en botón login")
-    context.login_page.click_login()
+def step_clic_login(context):
+    context.driver.find_element(By.ID, "login-button").click()
 
 @then('debería ser redirigido al inventario')
-def step_verify_inventory(context):
-    logger.info("Verificando redirección a inventario")
-    context.inventory_page = InventoryPage(context.driver)
-    assert context.inventory_page.is_loaded()
+def step_verificar_inventario(context):
+    WebDriverWait(context.driver, 10).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "inventory_list"))
+    )
 
-@then('debería ver el título "{title}"')
-def step_verify_title(context, title):
-    assert context.inventory_page.get_title() == title
+@then('debería ver el título "{titulo}"')
+def step_verificar_titulo(context, titulo):
+    titulo_elemento = WebDriverWait(context.driver, 10).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "title"))
+    )
+    assert titulo_elemento.text == titulo, f"Esperaba {titulo} pero vi {titulo_elemento.text}"
 
 @then('debería ver el mensaje de error "{mensaje}"')
-def step_verify_error(context, mensaje):
-    error = context.login_page.get_error_message()
-    assert mensaje in error, f"Esperado: {mensaje}, Obtenido: {error}"
-
-@given('que estoy logueado con el usuario "{user}"')
-def step_logged_in(context, user):
-    logger.info(f"Login automático con {user}")
-    context.login_page = LoginPage(context.driver)
-    context.login_page.open()
-    context.login_page.login(user, "secret_sauce")
-    context.inventory_page = InventoryPage(context.driver)
+def step_verificar_error(context, mensaje):
+    error = WebDriverWait(context.driver, 10).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "[data-test='error']"))
+    )
+    assert mensaje in error.text, f"Esperaba {mensaje} pero vi {error.text}"

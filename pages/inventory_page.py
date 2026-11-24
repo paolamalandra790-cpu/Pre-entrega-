@@ -1,26 +1,18 @@
-from behave import given, when, then
-from pages.login_page import LoginPage
-from pages.cart_page import CartPage
+class InventoryPage:
+    def __init__(self, page):
+        self.page = page
+        self.title = page.locator(".title")
+        self.inventory_items = page.locator(".inventory_item")
+        self.cart_button = page.locator(".shopping_cart_link")
 
-@given('inicio sesion con usuario "{user}" y contrasena "{password}"')
-def step_login(context, user, password):
-    login_page = LoginPage(context.driver)
-    login_page.open()
-    login_page.login(user, password)
+    def get_title(self):
+        return self.title.inner_text()
 
-@when('agrego "{product_name}" al carrito')
-def step_add_product(context, product_name):
-    inventory_page = InventoryPage(context.driver)
-    inventory_page.add_product_to_cart(product_name)
+    def get_items_count(self):
+        return self.inventory_items.count()
 
-@when('agrego los siguientes productos al carrito')
-def step_add_multiple_products(context):
-    inventory_page = InventoryPage(context.driver)
-    for row in context.table:
-        inventory_page.add_product_to_cart(row['producto'])
+    def add_first_item_to_cart(self):
+        self.page.locator(".inventory_item button").first.click()
 
-@then('el carrito debe contener {count:d} producto(s)')
-def step_verify_cart_count(context, count):
-    cart_page = CartPage(context.driver)
-    actual_count = cart_page.get_cart_count()
-    assert actual_count == count, f"Se esperaba {count} producto(s) en el carrito, pero se encontraron {actual_count}"
+    def open_cart(self):
+        self.cart_button.click()
