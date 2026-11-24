@@ -4,3 +4,4 @@ pytest-html
 behave
 requests
 webdriver-manager
+faker
