@@ -6,15 +6,15 @@ from selenium.webdriver.support import expected_conditions as EC
 @given('inicio sesion como "{user}" con la clave "{password}"')
 def step_login(context, user, password):
     context.driver.get("https://www.saucedemo.com/")
-    # Borramos la sesión anterior para que el 2do escenario entre limpio
-    context.driver.delete_all_cookies()
-    context.driver.execute_script("window.localStorage.clear(); window.sessionStorage.clear();")
-    context.driver.get("https://www.saucedemo.com/")
     WebDriverWait(context.driver, 10).until(
         EC.presence_of_element_located((By.ID, "user-name"))
     )
-    context.driver.find_element(By.ID, "user-name").send_keys(user)
-    context.driver.find_element(By.ID, "password").send_keys(password)
+    campo_user = context.driver.find_element(By.ID, "user-name")
+    campo_user.clear()
+    campo_user.send_keys(user)
+    campo_pass = context.driver.find_element(By.ID, "password")
+    campo_pass.clear()
+    campo_pass.send_keys(password)
     context.driver.find_element(By.ID, "login-button").click()
     WebDriverWait(context.driver, 10).until(
         EC.presence_of_element_located((By.CLASS_NAME, "inventory_list"))
