@@ -1,4 +1,4 @@
-ófrom behave import given, when, then
+from behave import given, when, then
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 import logging
