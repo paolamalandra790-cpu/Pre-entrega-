@@ -1,6 +1,6 @@
 from behave import given, when, then
-from features.pages.login_page import LoginPage
-from features.pages.inventory_page import InventoryPage
+from pages.login_page import LoginPage
+from pages.inventory_page import InventoryPage
 
 @given('inicio sesion como "{user}" con la clave "{password}"')
 def step_login(context, user, password):
