@@ -12,3 +12,5 @@ Feature: Funcionalidad del carrito
     When agrego el producto "Sauce Labs Backpack" al carrito
     And agrego el producto "Sauce Labs Bike Light" al carrito
     Then el contador del carrito debería ser "2"
+
+    fix: corrige login y add_to_cart en cart_steps
